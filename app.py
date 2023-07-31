@@ -38,5 +38,5 @@ def unhandled_exception(error):
     logging.error("Unhandled Exception: %s", (error))
     return render_template("500.html"), 500
 
-if __name__ == "__main__":
-   app.run(debug=False, host='0.0.0.0', port=8000)
+# if __name__ == "__main__":
+#    app.run(debug=False, host='0.0.0.0', port=8000)
