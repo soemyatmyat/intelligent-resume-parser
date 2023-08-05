@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% block nav_int_resume_parser %}active{% endblock %}
+{% block content %}
+    <div class="content">
+    <h3 class="text-center">{% block title %}Intelligent Resume Parser (PoC){% endblock %}</h3><hr>
+    <p>Designed to identify and match potentital candidates who closely align with the requirements/ skillsets from the job description. 
+    </p>
+    
+    <div class="row">
+        <main class="input-form">
+        <form method="POST" enctype="multipart/form-data">
+        <div class="form-group">
+            <h5><label>Job Description:</label></h5>
+            <textarea class="form-control" name="jobDesc" id="job-desc" rows="5"></textarea><br>
+        </div>   
+        <div class="form-group">
+            <label for="fileInput" class="btn btn-light">Resumes (PDF, doc, docx) in Zip | Max Size: 1MB </label>
+            <input type="file" name="fileInput" id="fileInput" style="display: none;" onchange="checkFile()">
+            <label id="fileName"></label>
+            <p id="errorMessage" style="color: red; display: none;">Invalid file format or size exceeds the limit!</p>
+        </div><br> 
+        <button class="w-100 btn btn-lg btn-success" id="submitButton" type="submit" disabled>Go!</button>        
+        </form>
+        </main>
+    </div>    
+
+    <div class="row">
+        <p>
+
+        <small><i>Need Testing data? <a href="https://www.dropbox.com/scl/fi/01enj4sbvygeq03pki0v2/intelligent_resume_parser_testingsample.zip?rlkey=fhaoypoc9mjpo22y5ikbz1cdz">Download Here (Job Description + Resumes in zip).</a> </i></small>
+        <small>Because this is a proof-of-concept, please pardon the file size limit and computing sluggishness. Thank you. 🥺</small>
+        </p>
+    </div>
+    </div>
+
+    <script>
+        // Ajax 
+        // $("#fileInput").change(function(){
+        //     $("#fileName").text(this.files[0].name);
+        // });
+        function checkFile() {
+            const fileInput = document.getElementById("fileInput");
+            const errorMessage = document.getElementById("errorMessage");
+            const fileNameDisplay = document.getElementById("fileName")
+            const submitButton = document.getElementById("submitButton")
+
+            if (fileInput.files.length > 0) {
+                const file = fileInput.files[0];
+                const fileSize = file.size; // in bytes
+                // console.log(fileSize);
+
+                // Set file size limit (in bytes)
+                const fileSizeLimit = 1 * 1024 * 1024; // 1 MB
+
+                // Set allowed file extensions
+                const allowedExtensions = [".zip"];
+
+                const fileName = file.name;
+                const fileExtension = fileName.substring(fileName.lastIndexOf('.')).toLowerCase();
+                if (fileSize > fileSizeLimit || !allowedExtensions.includes(fileExtension)) {
+                    errorMessage.style.display = 'block';
+                    fileInput.value = ''; // Clear the file input
+                    submitButton.disabled = true;
+                } else {
+                    errorMessage.style.display = 'none';
+                    submitButton.disabled = false;
+                }
+
+                fileNameDisplay.textContent = fileName;
+
+            }
+        }
+    </script>
+       
+{% endblock %}

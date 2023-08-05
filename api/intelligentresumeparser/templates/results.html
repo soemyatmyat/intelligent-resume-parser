@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% block nav_int_resume_parser %}active{% endblock %}
+{% block content %}
+    <style>
+      #list-container {
+      max-height: 2000px; /* Set a maximum height for the container */
+      overflow: hidden; /* Hide the overflow */
+      }
+
+      .collapsed {
+      max-height: 100px; /* Set an initial height for the collapsed state */
+      transition: max-height 0.3s ease; /* Add a smooth transition effect */
+      }
+    </style>
+
+    <h3 class="text-center">{% block title %}Intelligent Resume Parser (PoC){% endblock %}</h3><hr>
+    <h5>Keywords/ Skills extracted from Job Description:</h5>
+      {% for skill in job_desc_skills|sort %}
+      <span>{{ skill }}</span> 
+      {% endfor %}
+
+    <hr>
+    <h5>Candidates ({{ results|length }}):</h5>
+
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Match Score</th>
+            <th scope="col">Name</th>
+            <th scope="col">Emails</th>
+            <th scope="col">Phone</th>
+            <th scope="col">Education</th>
+            <th scope="col">Links</th>
+            <th scope="col">Skills</th>
+            <th scope="col">Resume</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for result in results|sort(attribute="match_score")|reverse %}
+          <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ result["match_score"] }}</td>
+            <td>{% for name in result["name"] %}{{ name }}<br>{% endfor %}</td>
+            <td>{% for email in result["emails"] %}{{ email }}<br>{% endfor %}</td>
+            <td>{% for phone in result["phones"] %}{{ phone }}<br>{% endfor %}</td>
+            <td>{% for edu in result["educations"] %}{{ edu }}<br>{% endfor %}</td>
+            <td>{% for link in result["links"] %}<a href="{{ link }}" target="_blank">{{ link }}</a><br>{% endfor %}</td>
+            <!--<td>{% for skill in result["skills"] %}{{ skill }}<br>{% endfor %}</td>-->
+            <td>
+            <div id="list-container">
+              <button class="btn btn-light">Show More</button>
+              <ul id="list" class="collapsed">
+                {% for skill in result["skills"]|sort %}
+                <li>{{ skill }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+            </td>
+            <td><a href="{{ result['resume'] }}" target="_blank">Download</a></td>
+            <td></td>
+          </tr>            
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+
+
+  <script>
+    var toggleButtons = document.getElementsByClassName("btn btn-light");
+  
+    Array.from(toggleButtons).forEach(function(button) {
+      button.addEventListener("click", function() {
+        var details = button.nextElementSibling;
+        if (details.classList.contains("collapsed")) {
+          details.classList.remove("collapsed");
+          button.textContent = "Show Less";
+        } else {
+          details.classList.add("collapsed");
+          button.textContent = "Show More";
+        }
+      });
+    });
+  </script>
+    
+       
+{% endblock %}
+
+
+
+
+

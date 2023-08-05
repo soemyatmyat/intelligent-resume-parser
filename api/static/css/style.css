@@ -1,0 +1,96 @@
+
+.navbar {
+  border-bottom: 1px solid;
+}
+
+body {
+  padding-top: 80px;
+}
+
+.footer {
+  position: absolute;
+  bottom:0;
+  margin-top: -150px; /* negative value of footer height */
+  height: 150px;
+  clear:both;
+  padding-top:20px;
+} 
+
+p {
+  text-align: justify;
+  white-space: pre-line;
+}
+
+img {
+  pointer-events: none;
+}
+
+.img-cover{
+  height: 200px;
+  object-fit: contain;
+  object-position: center;
+}
+
+pre {
+  padding: 16px;
+  background-color: #F7F9FA;
+  border-radius: 4px;
+  font-size: 14px;
+  overflow-x: auto;
+}
+
+
+
+/* Intelligent Resume Parser */
+textarea.form-control:focus {
+  border-color: green;
+  box-shadow: 0 0 0 0.2rem rgba(0, 240, 0, 0.126);
+  outline: 0;
+}
+
+.btn-light {
+  border-color:#c4c4c4;
+}
+
+  /* delete later */
+.badge {
+    color: #000;
+}
+
+a:link {
+    text-decoration: none;
+}
+
+.callout {
+    padding: 20px;
+    margin: 20px 0;
+    border: 1px solid #eee;
+    border-left-width: 5px;
+    border-radius: 3px;
+    h4 {
+      margin-top: 0;
+      margin-bottom: 5px;
+    }
+    p:last-child {
+      margin-bottom: 0;
+    }
+    code {
+      border-radius: 3px;
+    }
+    & + .bs-callout {
+      margin-top: -5px;
+    }
+  }
+  @each $name,$color in (default,#777),(primary,#428bca),(success,#5cb85c),(danger,#d9534f),(warning,#f0ad4e),(info,#5bc0de), (bdc,#29527a) {
+    .callout-#{$name} {
+      border-left-color: $color;
+      h4 {
+        color: $color;
+      }
+    }
+  }
+
+.title_link{
+  color: #343a40;
+}
+
